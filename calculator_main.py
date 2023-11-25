@@ -39,14 +39,6 @@ class Main(QDialog):
         button_square = QPushButton("x^2")
         button_root = QPushButton("x^(1/2)")
 
-        ### 추가 버튼 클릭 시 시그널 설정
-        button_mod.clicked.connect(lambda state, operation = "%": self.button_operation_clicked(operation))
-        button_c.clicked.connect(self.button_clear_clicked)
-        button_ce.clicked.connect(self.button_clear_clicked)
-        button_reverse.clicked.connect(lambda state, operation = "**(-1)":self.button_unary_operation_clicked(operation))
-        button_square.clicked.connect(lambda state, operation = "**2":self.button_unary_operation_clicked(operation))
-        button_root.clicked.connect(lambda state, operation = "**(1/2)":self.button_unary_operation_clicked(operation))
-
         ### 추가 버튼을 일단 layout_operation 레이아웃에 추가
         layout_operation.addWidget(button_mod)
         layout_operation.addWidget(button_c)
@@ -126,12 +118,6 @@ class Main(QDialog):
         equation = self.equation_solution.text()
         equation += operation
         self.equation.setText(equation)
-        
-    def button_unary_operation_clicked(self, operation):
-        equation = self.equation_solution.text()
-        equation += operation
-        solution = eval(equation)
-        self.equation_solution.setText(str(solution))
 
     def button_equal_clicked(self):
         equation = self.equation_solution.text()
