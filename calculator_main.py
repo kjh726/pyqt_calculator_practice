@@ -10,8 +10,11 @@ class Main(QDialog):
         main_layout = QVBoxLayout()
 
         ### 각 위젯을 배치할 레이아웃을 미리 만들어 둠
-        layout_operation = QHBoxLayout()
-        layout_clear_equal = QHBoxLayout()
+        ### 배치 변경 위해 레이아웃 삭제 및 생성
+        #layout_operation = QHBoxLayout()
+        #layout_clear_equal = QHBoxLayout()
+        layout_mod_c_ce_bs = QHBoxLayout()
+        layout_re_sq_rt_di = QHBoxLayout()
         layout_number = QGridLayout()
         layout_equation_solution = QFormLayout()
 
@@ -48,12 +51,12 @@ class Main(QDialog):
         button_root.clicked.connect(lambda state, operation = "**(1/2)":self.button_unary_operation_clicked(operation))
 
         ### 추가 버튼을 일단 layout_operation 레이아웃에 추가
-        layout_operation.addWidget(button_mod)
-        layout_operation.addWidget(button_c)
-        layout_operation.addWidget(button_ce)
-        layout_operation.addWidget(button_reverse)
-        layout_operation.addWidget(button_square)
-        layout_operation.addWidget(button_root)
+        layout_mod_c_ce_bs.addWidget(button_mod)
+        layout_mod_c_ce_bs.addWidget(button_c)
+        layout_mod_c_ce_bs.addWidget(button_ce)
+        layout_re_sq_rt_di.addWidget(button_reverse)
+        layout_re_sq_rt_di.addWidget(button_square)
+        layout_re_sq_rt_di.addWidget(button_root)
 
 
         ### 사칙연산 버튼을 클릭했을 때, 각 사칙연산 부호가 수식창에 추가될 수 있도록 시그널 설정
@@ -63,10 +66,10 @@ class Main(QDialog):
         button_division.clicked.connect(lambda state, operation = "/": self.button_operation_clicked(operation))
 
         ### 사칙연산 버튼을 layout_operation 레이아웃에 추가
-        layout_operation.addWidget(button_plus)
-        layout_operation.addWidget(button_minus)
-        layout_operation.addWidget(button_product)
-        layout_operation.addWidget(button_division)
+        layout_number.addWidget(button_plus, 2, 3)
+        layout_number.addWidget(button_minus, 1, 3)
+        layout_number.addWidget(button_product, 0, 3)
+        layout_re_sq_rt_di.addWidget(button_division)
 
         ### =, clear, backspace 버튼 생성
         button_equal = QPushButton("=")
@@ -79,9 +82,9 @@ class Main(QDialog):
         button_backspace.clicked.connect(self.button_backspace_clicked)
 
         ### =, clear, backspace 버튼을 layout_clear_equal 레이아웃에 추가
-        layout_clear_equal.addWidget(button_clear)
-        layout_clear_equal.addWidget(button_backspace)
-        layout_clear_equal.addWidget(button_equal)
+        #layout_clear_equal.addWidget(button_clear)
+        layout_mod_c_ce_bs.addWidget(button_backspace)
+        layout_number.addWidget(button_equal, 3, 3)
 
         ### 숫자 버튼 생성하고, layout_number 레이아웃에 추가
         ### 각 숫자 버튼을 클릭했을 때, 숫자가 수식창에 입력 될 수 있도록 시그널 설정
@@ -91,8 +94,8 @@ class Main(QDialog):
             number_button_dict[number].clicked.connect(lambda state, num = number:
                                                        self.number_button_clicked(num))
             if number >0:
-                x,y = divmod(number-1, 3)
-                layout_number.addWidget(number_button_dict[number], x, y)
+                x,y = divmod(9-number, 3)
+                layout_number.addWidget(number_button_dict[number], x, abs(2-y))
             elif number==0:
                 layout_number.addWidget(number_button_dict[number], 3, 1)
 
@@ -107,8 +110,10 @@ class Main(QDialog):
 
         ### 각 레이아웃을 main_layout 레이아웃에 추가
         main_layout.addLayout(layout_equation_solution)
-        main_layout.addLayout(layout_operation)
-        main_layout.addLayout(layout_clear_equal)
+        main_layout.addLayout(layout_mod_c_ce_bs)
+        main_layout.addLayout(layout_re_sq_rt_di)
+        #main_layout.addLayout(layout_operation)
+        #main_layout.addLayout(layout_clear_equal)
         main_layout.addLayout(layout_number)
 
         self.setLayout(main_layout)
